@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Optimization of two random normals &#8212; My Jupyter Book</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-2 bd-sidebar site-navigation show single-page" id="site-navigation">
+    
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/bgtheory.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/bgtheory.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preliminaries">
+   Preliminaries
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#independent-randoms">
+     Independent randoms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#non-independent-randoms">
+     Non-independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#a-remark-on-the-statistics">
+       A remark on the statistics
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   Optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#solution-via-lagrange-multipliers">
+       Solution via Lagrange multipliers
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Non-independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrange-multipliers-for-dependent-randoms">
+       Lagrange multipliers for dependent randoms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-perfectly-correlated-variables">
+     For perfectly correlated variables
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#special-case">
+       Special case
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-case">
+       General case
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#determining-the-linear-parameters">
+       Determining the linear parameters
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applications">
+   Applications
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#growth-rates">
+     Growth rates
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-unit-holdings">
+     Optimal unit holdings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#remarks-on-the-perfectly-correlated-case">
+     Remarks on the perfectly correlated case
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Optimization of two random normals</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preliminaries">
+   Preliminaries
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#independent-randoms">
+     Independent randoms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#non-independent-randoms">
+     Non-independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#a-remark-on-the-statistics">
+       A remark on the statistics
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   Optimization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#solution-via-lagrange-multipliers">
+       Solution via Lagrange multipliers
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Non-independent randoms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lagrange-multipliers-for-dependent-randoms">
+       Lagrange multipliers for dependent randoms
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-perfectly-correlated-variables">
+     For perfectly correlated variables
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#special-case">
+       Special case
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-case">
+       General case
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#determining-the-linear-parameters">
+       Determining the linear parameters
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applications">
+   Applications
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#growth-rates">
+     Growth rates
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-unit-holdings">
+     Optimal unit holdings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#remarks-on-the-perfectly-correlated-case">
+     Remarks on the perfectly correlated case
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="optimization-of-two-random-normals">
+<h1>Optimization of two random normals<a class="headerlink" href="#optimization-of-two-random-normals" title="Permalink to this headline">¶</a></h1>
+<p>— <strong>Kowshik Bettadapura</strong></p>
+<div class="admonition-problem-statement admonition">
+<p class="admonition-title">Problem statement.</p>
+<p><em>Let <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> be two random, normals. That is, two random variables distributed normally. Then for a given level of <em>risk</em> <span class="math notranslate nohighlight">\(r^2\)</span>, what combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta} = \lambda X + \delta Y\)</span> will give the largest expectation?</em></p>
+</div>
+<div class="section" id="preliminaries">
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="independent-randoms">
+<h3>Independent randoms<a class="headerlink" href="#independent-randoms" title="Permalink to this headline">¶</a></h3>
+<p>The normal distribution is an instance of the class of <em>stable</em> distributions. This means any linear combination of random, normal variables will again be normally distributed. So if <span class="math notranslate nohighlight">\(X\sim \mathcal N(\mu_X, \sigma^2_X)\)</span> and <span class="math notranslate nohighlight">\(Y\sim \mathcal N(\mu_Y, \sigma_Y^2)\)</span> with <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> independent, then any linear combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta} = \lambda X + \delta Y\)</span> for <span class="math notranslate nohighlight">\(\lambda, \delta\in \mathbb R\)</span> will be distributed according to</p>
+<div class="math notranslate nohighlight">
+\[Z_{\lambda, \delta} \sim \mathcal N\left(\lambda\mu_X + \delta\mu_Y, (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2\right).
+\]</div>
+<p>The expected value is <span class="math notranslate nohighlight">\(\mathbb E Z_{\lambda, \delta} = \lambda\mu_X + \delta\mu_Y\)</span> with variance, or “volatility”, <span class="math notranslate nohighlight">\(\sigma_{Z_{\lambda, \delta}}^2 = (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2\)</span>.</p>
+</div>
+<div class="section" id="non-independent-randoms">
+<h3>Non-independent randoms<a class="headerlink" href="#non-independent-randoms" title="Permalink to this headline">¶</a></h3>
+<p>In the case where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are <em>not</em> random, they will have non-zero covariance, denoted <span class="math notranslate nohighlight">\(c_{X, Y}\)</span>. This affects the probability law governing the linear combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The covariance of <span class="math notranslate nohighlight">\(X\)</span> with itself is just the variance <span class="math notranslate nohighlight">\(\sigma_X^2\)</span>, i.e., <span class="math notranslate nohighlight">\(c_{X, X} = \sigma_X^2\)</span>.</p>
+</div>
+<p>With the covariance <span class="math notranslate nohighlight">\(c_{X, Y}\)</span> the combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span> is distributed according to the law,</p>
+<div class="math notranslate nohighlight">
+\[Z_{\lambda, \delta}
+\sim
+\mathcal N\left(\lambda\mu_X + \delta\mu_Y, (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta\right)
+\]</div>
+<p>See that in both the independent or dependent case the expectation of <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span>, <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda, \delta}\)</span> remains the same. What changes is the volatility.</p>
+<div class="section" id="a-remark-on-the-statistics">
+<h4>A remark on the statistics<a class="headerlink" href="#a-remark-on-the-statistics" title="Permalink to this headline">¶</a></h4>
+<p>Variance is the square of the standard deviation. Accordingly, the variance is always positive for <em>mathematical</em> reasons. In contrast, the standard deviation need not be positive for <em>mathematical</em> reasons, but must be positive if it is to be understood as a statistical parameter.</p>
+<p>In the distribution law for <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span>, its variance is</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{Var}~Z_{\lambda, \delta}
+=
+(\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta. \]</div>
+<p>Unlike in the case of independent randoms, it is not immediately clear here that <span class="math notranslate nohighlight">\(\mathrm{Var}~Z_{\lambda,\delta} \geq 0\)</span>. In order to see that it is we will need to use the following:</p>
+<div class="admonition-fact admonition">
+<p class="admonition-title">Fact</p>
+<p>For random variables <span class="math notranslate nohighlight">\(X, Y\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+-\sigma_X\sigma_Y \leq c_{X, Y} \leq \sigma_X\sigma_Y
+\end{align}
+\]</div>
+</div>
+<p>We will now prove the following.</p>
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p>For normal randoms <span class="math notranslate nohighlight">\(X, Y\)</span>, <span class="math notranslate nohighlight">\(\mathrm{Var}~Z_{\lambda, \delta}\geq0\)</span> for any <span class="math notranslate nohighlight">\(\lambda, \delta\)</span>.</p>
+</div>
+<div class="admonition-proof admonition">
+<p class="admonition-title">Proof.</p>
+<p>The proof of this statement can be arrived at by contradiction. Since the statement in the proposition is about a statistical parameter, it is equivalent to proving the following mathematical proposition: let <span class="math notranslate nohighlight">\(x, y\)</span> be positive, real variables and <span class="math notranslate nohighlight">\(\rho &lt; 1\)</span> a parameter. Then</p>
+<div class="math notranslate nohighlight">
+\[x^2 + y^2 \geq 2\rho xy.
+\]</div>
+<p>To prove the above, suppose in converse that <span class="math notranslate nohighlight">\(x^2 + y^2 &lt; 2\rho xy\)</span>. We will intend on arriving at a contradiction. Firstly, with this assumption note that <span class="math notranslate nohighlight">\(xy&gt; 0\)</span>. Dividing through by <span class="math notranslate nohighlight">\(xy\)</span> and using that <span class="math notranslate nohighlight">\(\rho\leq 1\)</span> gives,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{x^2 + y^2}{xy} &lt; 2\rho \leq 2.
+\end{align}
+\]</div>
+<p>Set <span class="math notranslate nohighlight">\(z = \frac{x}{y}\)</span>. Then <span class="math notranslate nohighlight">\(z\)</span> will again be a real, positive number. The above inequality becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+z + \frac{1}{z} &lt; 2 &amp;\iff z^2 + 1 &lt; 2z
+\\
+&amp;\iff z^2 - 2z + 1 &lt; 0 
+\\
+&amp;\iff (z-1)^2 &lt; 0.
+\end{align}
+\end{split}\]</div>
+<p>We have now arrived at a contradiction. Since <span class="math notranslate nohighlight">\(z\)</span> is real, <span class="math notranslate nohighlight">\(z-1\)</span> is real so that <span class="math notranslate nohighlight">\((z-1)^2\)</span> will necessarily be positive. Hence that <span class="math notranslate nohighlight">\((z-1)^2&lt; 0\)</span> cannot be true.</p>
+<p>From here, using that <span class="math notranslate nohighlight">\(c_{X, Y} = \rho\sigma_X\sigma_Y\)</span> for <span class="math notranslate nohighlight">\(\rho\)</span> the <em>Pearson correlation coefficient</em> (a parameter between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>), we can deduce that the variance <span class="math notranslate nohighlight">\(\mathrm{Var}~Z_{\lambda,\delta}\)</span> above must indeed be positive for any <span class="math notranslate nohighlight">\(\lambda, \delta\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">¶</a></h2>
+<p>From the problem statement, we want to maximize the expectation <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda, \delta}\)</span> subject to a fixed level of risk <span class="math notranslate nohighlight">\(r\)</span>, which can be taken here to mean the standard deviation in <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span>. We first consider the case where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are independent below, after which we proceed to study the dependent case.</p>
+<div class="section" id="id1">
+<h3>Independent randoms<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>For two independent randoms <span class="math notranslate nohighlight">\(X, Y\)</span> recall that</p>
+<div class="math notranslate nohighlight">
+\[Z_{\lambda, \delta} \sim \mathcal N\left(\lambda \mu_X + \delta\mu_Y, (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2\right)
+\]</div>
+<p>Set <span class="math notranslate nohighlight">\(r^2 = (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2\)</span>. Our problem is thus:</p>
+<ul class="simple">
+<li><p>maximize <span class="math notranslate nohighlight">\(\lambda \mu_X + \delta\mu_Y\)</span>;</p></li>
+<li><p>with <span class="math notranslate nohighlight">\(r^2\)</span> <em>constant</em>.</p></li>
+</ul>
+<p>See that we need to maximize a linear form in the parameters <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> subject to a quadratic constraint in <span class="math notranslate nohighlight">\(\lambda, \delta\)</span>. Thus, we find here a typical problem in the area of <em>quadratic programming</em>. It will not be necessary to appeal to this area however as, in our setting, an analytic solution can be obtained through the method of <em>Lagrange multipliers</em>.</p>
+<div class="section" id="solution-via-lagrange-multipliers">
+<h4>Solution via Lagrange multipliers<a class="headerlink" href="#solution-via-lagrange-multipliers" title="Permalink to this headline">¶</a></h4>
+<p>Let <span class="math notranslate nohighlight">\(\mathcal L\)</span> be the Lagrange functional which, in our setting, will be given by</p>
+<div class="math notranslate nohighlight">
+\[\mathcal L(\lambda, \delta, C)
+=
+\left(\lambda \mu_X + \delta\mu_Y\right)
+-
+\frac{C}{2}
+\left((\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 - r^2\right)
+\]</div>
+<p>Choosing <span class="math notranslate nohighlight">\(\frac{C}{2}\)</span> in <span class="math notranslate nohighlight">\(\mathcal L\)</span> above is convenient in undertaking forthcoming calculations. This factor, or the constant <span class="math notranslate nohighlight">\(C\)</span> itself, is usually referred to as the <em>Lagrange multiplier</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <span class="math notranslate nohighlight">\((\lambda^*, \delta^*)\)</span> is an optimal value of <span class="math notranslate nohighlight">\(\mathcal L\)</span> subject to <span class="math notranslate nohighlight">\(\partial \mathcal L/\partial C = 0\)</span>, then <span class="math notranslate nohighlight">\(\mathcal L(\lambda^*, \delta^*, C)\)</span> is at a minima or maxima along the curve <span class="math notranslate nohighlight">\(\partial \mathcal L/\partial C = 0\)</span>. In particular, <span class="math notranslate nohighlight">\(d\mathcal L|_{(\lambda^*, \delta^*)} =0\)</span>. This latter condition is our means of finding the optimal points <span class="math notranslate nohighlight">\((\lambda^*, \delta^*)\)</span>.</p>
+</div>
+<p>The differential <span class="math notranslate nohighlight">\(d\mathcal L\)</span> of <span class="math notranslate nohighlight">\(\mathcal L\)</span> is,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+d\mathcal L
+&amp;=
+\mu_Xd\lambda + \mu_Y d\delta
+-
+\frac{C}{2}
+\left(
+2\sigma_X^2\lambda d\lambda
++
+2\sigma_Y^2\delta d\delta
+\right)
+-
+\frac{1}{2}dC
+\left((\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 - r^2\right)
+\\
+&amp;=
+\left(\mu_X - C\sigma_X^2\lambda\right)d\lambda
++
+\left(\mu_Y - C\sigma_Y^2\delta\right)d\delta
+-
+\frac{1}{2}
+\left((\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 - r^2\right)
+dC
+\end{align}
+\end{split}\]</div>
+<p>Setting <span class="math notranslate nohighlight">\(d\mathcal L = 0\)</span> gives the equations,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mu_X - C\sigma^2_X\lambda &amp;= 0;
+\\
+\mu_Y - C\sigma_Y^2\delta &amp;= 0;
+\\
+(\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 - r^2 &amp;= 0.
+\end{align}
+\end{split}\]</div>
+<p>This latter equation is just the specification of the curve <span class="math notranslate nohighlight">\(\partial \mathcal L/\partial C = 0\)</span> and, oestensibly, adds no further information. It is referred to as the <em>constraint equation</em>.</p>
+<p>From the former two equations, see that we obtain expressions for the parameters <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> in terms of the Lagrange multiplier <span class="math notranslate nohighlight">\(C\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda 
+= \frac{\mu_X}{C\sigma_X^2}
+&amp;&amp;\mbox{and}&amp;&amp;
+\delta
+=
+\frac{\mu_Y}{C\sigma_Y^2}
+\end{align}
+\]</div>
+<p>In order to find the <em>optimal values</em> <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> it remains to determine the multiplier <span class="math notranslate nohighlight">\(C\)</span>. This is where we can appeal to the constraint equation (the last of the above three equations).</p>
+<p>Recall that <span class="math notranslate nohighlight">\(\mu_X,\sigma_Y, \mu_Y, \sigma_Y\)</span> and <span class="math notranslate nohighlight">\(r^2\)</span> are all constants, established at the outset of the problem statement. Substituting <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> above into the constraint equation results in the following quadratic equation for <span class="math notranslate nohighlight">\(C\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[r^2C^2 - \left(\frac{\mu_X}{\sigma_X}\right)^2 - \left(\frac{\mu_Y}{\sigma_Y}\right)^2 = 0.
+\]</div>
+<p>This readily gives the following values for <span class="math notranslate nohighlight">\(C\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+C_\pm
+=
+\pm\frac{1}{r}
+\sqrt{\left(\frac{\mu_X}{\sigma_X}\right)^2 + \left(\frac{\mu_Y}{\sigma_Y}\right)^2}
+\end{align}
+\]</div>
+<p>Optimal parameters are therefore,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda^*_\pm
+=
+\pm
+\frac{r\mu_X}{\sqrt{\left(\frac{\mu_X}{\sigma_X}\right)^2 + \left(\frac{\mu_Y}{\sigma_Y}\right)^2}}
+&amp;&amp;\mbox{and}&amp;&amp;
+\delta^*_\pm
+=
+\pm\frac{r\mu_Y}{\sqrt{\left(\frac{\mu_X}{\sigma_X}\right)^2 + \left(\frac{\mu_Y}{\sigma_Y}\right)^2}}.
+\end{align}
+\]</div>
+<p>Now recall from the problem statement that we want <span class="math notranslate nohighlight">\((\lambda^*, \delta^*)\)</span> which maximizes the expectation <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda^*, \delta^*} = \lambda^*\mu_X + \delta^*\mu_Y\)</span>. As the expectation is linear in the parameters <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span>, the optima to choose from the possibilities depends entirely on the signs of the slope of the linear form, i.e., on <span class="math notranslate nohighlight">\(\mu_X\)</span> and <span class="math notranslate nohighlight">\(\mu_Y\)</span>.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>In the case where <span class="math notranslate nohighlight">\(\mu_X, \mu_Y &gt; 0\)</span> it is clear that <span class="math notranslate nohighlight">\((\lambda^*, \delta^*) = (\lambda^*_+, \delta^*_+)\)</span> are the appropriate optima which maximize the linear form.</p>
+</div>
+<p>Whichever optima <span class="math notranslate nohighlight">\((\lambda^*, \delta^*)\)</span> we find, it means the following: with <span class="math notranslate nohighlight">\(r\)</span> fixed, <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda^*, \delta^*} \geq \mathbb EZ_{\lambda, \delta}\)</span> for all <span class="math notranslate nohighlight">\(\lambda, \delta\)</span>.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Non-independent randoms<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The case of non-independent randoms is a bit more involved. The general principles are the same however. For <span class="math notranslate nohighlight">\(X, Y\)</span> non-independent means they have non-vanishing covariance <span class="math notranslate nohighlight">\(c_{X, Y}\)</span>. Any linear combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta} = \lambda X + \delta Y\)</span> will be distributed according to,</p>
+<div class="math notranslate nohighlight">
+\[Z_{\lambda, \delta}
+\sim 
+\mathcal N\left(\lambda\mu_X + \delta\mu_Y, (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta \right)
+\]</div>
+<p>We can use the method of Lagrange multipliers again to find the parameter values <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> which maximize the expectation <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda, \delta}\)</span> for all <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> subject to a fixed level of risk <span class="math notranslate nohighlight">\(r^2 = (\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta\)</span>.</p>
+<div class="section" id="lagrange-multipliers-for-dependent-randoms">
+<h4>Lagrange multipliers for dependent randoms<a class="headerlink" href="#lagrange-multipliers-for-dependent-randoms" title="Permalink to this headline">¶</a></h4>
+<p>The Lagrangian functional <span class="math notranslate nohighlight">\(\mathcal L\)</span> mediating our optimisation is the following,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal L(\lambda, \delta, C)
+=
+\lambda\mu_X + \delta\mu_Y
+-
+\frac{C}{2}
+\left(
+(\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta
+-
+r^2
+\right)
+\]</div>
+<p>Its differential is,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+d\mathcal L
+=&amp;~
+\left(\mu_X - C\left(\sigma_X^2\lambda + c_{X, Y}\delta\right)\right)d\lambda
++
+\left(\mu_Y - C\left(\sigma_Y^2\delta + c_{X, Y}\lambda\right)\right)d\delta
+\\
+&amp;
+-\frac{1}{2}
+\left(
+(\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta 
+-
+r^2
+\right)
+dC.
+\end{align}
+\end{split}\]</div>
+<p>Setting <span class="math notranslate nohighlight">\(d\mathcal L = 0\)</span> now gives the following equations,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mu_X - C\left(\sigma_X^2\lambda + c_{X, Y}\delta\right)
+&amp;= 0
+\\
+\mu_Y - C\left(\sigma_Y^2\delta + c_{X, Y}\lambda\right)
+&amp;= 0
+\\
+(\lambda\sigma_X)^2 + (\delta\sigma_Y)^2 + 2c_{X, Y}\lambda\delta 
+-
+r^2
+&amp;= 0.
+\end{align}
+\end{split}\]</div>
+<p>Recall that the latter equation is referred to as the <em>constraint equation</em>. Solving the first two equations simultaneously gives the following expressions for <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\delta\)</span> in terms of the problem constants <span class="math notranslate nohighlight">\(\mu_X, \sigma_X, \mu_Y, \sigma_Y\)</span> and the yet to be determined multiplier <span class="math notranslate nohighlight">\(C\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda
+=
+\frac{\sigma_Y^2\mu_X - c_{X, Y}\mu_Y}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}}\frac{1}{C}
+&amp;&amp;\mbox{and}&amp;&amp;
+\delta
+=
+\frac{\sigma_X^2\mu_Y - c_{X, Y}\mu_X}{\sigma_X^2\sigma_Y^2 - c_{X, Y}^2}\frac{1}{C}.
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a quick consistency check, note that if <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> were independent, then <span class="math notranslate nohighlight">\(c_{X, Y} = 0\)</span>. In this case, we recover the expressions for <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> in the case of independent randoms.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are perfectly correlated, then <span class="math notranslate nohighlight">\(c_{X, Y} = \pm\sigma_X\sigma_Y\)</span>, i.e., that <span class="math notranslate nohighlight">\(c_{X, Y}^2 = \sigma_X^2\sigma_Y^2\)</span> in which case <span class="math notranslate nohighlight">\(\lambda,\delta\)</span> above are <em>undefined</em>. The case of perfectly correlated, random variables needs to be considered seperately. In what follows we assume <span class="math notranslate nohighlight">\(c^2_{X, Y}\neq \sigma^2_X\sigma^2_Y\)</span>.</p>
+</div>
+<p>In order to determine the multiplier <span class="math notranslate nohighlight">\(C\)</span> we need to substitute the expressions <span class="math notranslate nohighlight">\(\lambda, \delta\)</span> above into the constraint equation. To ease our calculation define the following:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+A_\lambda 
+&amp;= 
+\sigma_X\frac{\sigma_Y^2\mu_X - c_{X, Y}\mu_Y}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}};
+\\
+A_\delta
+&amp;=
+\sigma_Y\frac{\sigma_X^2\mu_Y - c_{X, Y}\mu_X}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}};
+\\
+A_{\lambda\delta}
+&amp;=
+c_{X, Y}
+\left(
+\frac{\sigma_Y^2\mu_X - c_{X, Y}\mu_Y}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}}
+\right)
+\left(
+\frac{\sigma_X^2\mu_Y - c_{X, Y}\mu_X}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}}
+\right).
+\end{align}
+\end{split}\]</div>
+<p>The constraint equation now becomes</p>
+<div class="math notranslate nohighlight">
+\[\frac{A^2_\lambda}{C^2} + \frac{A^2_\delta}{C^2} + 2\frac{A_{\lambda\delta}}{C^2} - r^2 = 0
+\]</div>
+<p>and hence we find,</p>
+<div class="math notranslate nohighlight">
+\[C_\pm = \pm\frac{1}{r}\sqrt{A^2_\lambda + A^2_\delta + 2A_{\lambda\delta}}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Generally, our solution is well defined if and only if <span class="math notranslate nohighlight">\(A^2_\lambda + A^2_\delta + 2A_{\lambda\delta}&gt; 0\)</span>, i.e., if <span class="math notranslate nohighlight">\(C\)</span> is <em>real</em>. This is of course true however for the same reasons that <span class="math notranslate nohighlight">\(\mathrm{Var}~Z_{\lambda,\delta} \geq 0\)</span> (see the proof of this statement above).</p>
+</div>
+<p>With possible constants <span class="math notranslate nohighlight">\(C_\pm\)</span> established, the optimal values <span class="math notranslate nohighlight">\(\lambda^*,\delta^*\)</span> are given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\lambda^*_\pm
+&amp;=
+\pm
+\frac{\sigma_Y^2\mu_X - c_{X, Y}\mu_Y}{\sigma_X^2\sigma_Y^2 - c^2_{X, Y}}\frac{r}{\sqrt{A^2_\lambda + A^2_\delta + 2A_{\lambda\delta}}}
+\\
+\delta^*_\pm
+&amp;=
+\pm
+\frac{\sigma_X^2\mu_Y - c_{X, Y}\mu_X}{\sigma_X^2\sigma_Y^2 - c_{X, Y}^2}\frac{r}{\sqrt{A^2_\lambda + A^2_\delta + 2A_{\lambda\delta}}}.
+\end{align}
+\end{split}\]</div>
+<p>It remains to check the pairs <span class="math notranslate nohighlight">\((\lambda_+, \delta_+), (\lambda_+, \delta_-), (\lambda_-, \delta_+), (\lambda_-, \delta_-)\)</span> to see which pair will maximize the linear form <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda,\delta} = \lambda \mu_X + \delta\mu_Y\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a consistency check, if <span class="math notranslate nohighlight">\(X, Y\)</span> are independent randoms, <span class="math notranslate nohighlight">\(c_{X, Y} = 0\)</span>. In this case the above expressions reduce to what we found earlier for independent randoms.</p>
+</div>
+</div>
+</div>
+<div class="section" id="for-perfectly-correlated-variables">
+<h3>For perfectly correlated variables<a class="headerlink" href="#for-perfectly-correlated-variables" title="Permalink to this headline">¶</a></h3>
+<p>If <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are perfectly correlated, <span class="math notranslate nohighlight">\(c_{X, Y} = \pm\sigma_X\sigma_Y\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>Pearson correlation coefficient</em> is the scalar <span class="math notranslate nohighlight">\(\rho\)</span> such that <span class="math notranslate nohighlight">\(c_{X, Y} = \rho \sigma_X\sigma_Y\)</span>. If <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are perfectly correlated, then <span class="math notranslate nohighlight">\(\rho = \pm 1\)</span> which is equivalent to <span class="math notranslate nohighlight">\(c_{X, Y} = \pm\sigma_X\sigma_Y\)</span>.</p>
+</div>
+<p>Any linear combination <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span> follows the law,</p>
+<div class="math notranslate nohighlight">
+\[Z_{\lambda, \delta} \sim \mathcal N\left(\lambda\mu_X+\delta\mu_Y, (\lambda\sigma_X \pm \delta\sigma_Y)^2\right)
+\]</div>
+<p>where the sign <span class="math notranslate nohighlight">\(\pm\)</span> in the variance is in accordance with whether <span class="math notranslate nohighlight">\(\rho = 1\)</span> or <span class="math notranslate nohighlight">\(\rho = -1\)</span>.</p>
+<div class="section" id="special-case">
+<h4>Special case<a class="headerlink" href="#special-case" title="Permalink to this headline">¶</a></h4>
+<p>Suppose <span class="math notranslate nohighlight">\(X = Y\)</span>. Then <span class="math notranslate nohighlight">\(c_{X, Y} = \sigma_X^2\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+Z_{\lambda, \delta} 
+&amp;= (\lambda + \delta)X
+\\
+&amp;\sim \mathcal N\left((\lambda + \delta)\mu_X, (\lambda + \delta)^2\sigma_X^2\right)
+\\
+&amp;= 
+\mathcal N\left(\gamma \mu_X, \gamma^2\sigma_X^2\right)
+\end{align}
+\end{split}\]</div>
+<p>where we have set <span class="math notranslate nohighlight">\(\gamma = \lambda + \delta\)</span>. The problem of maximizing the expectation <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda, \delta}\)</span> subject to a fixed level of risk <span class="math notranslate nohighlight">\(r^2\)</span> amounts solving for <span class="math notranslate nohighlight">\(\gamma\)</span> in the equation <span class="math notranslate nohighlight">\(r^2 = \gamma^2\sigma_X^2\)</span>, being</p>
+<div class="math notranslate nohighlight">
+\[\gamma^* = \pm\frac{r}{\sigma_X}.
+\]</div>
+<p>As for finding the optimal values <span class="math notranslate nohighlight">\((\lambda^*, \delta^*)\)</span>, see that this is an undertermined problem. We can choose any value for <span class="math notranslate nohighlight">\(\delta^*\)</span>. Then with <span class="math notranslate nohighlight">\(\gamma^* =\pm r/\sigma_X\)</span> above, we obtain <span class="math notranslate nohighlight">\(\lambda^* = \pm r/\sigma_X - \delta^*\)</span>. The choice of sign determining whether we have a maximum or minimum value, itself according to the parity of <span class="math notranslate nohighlight">\(\mu_X\)</span>.</p>
+</div>
+<div class="section" id="general-case">
+<h4>General case<a class="headerlink" href="#general-case" title="Permalink to this headline">¶</a></h4>
+<p>With <span class="math notranslate nohighlight">\(c_{X, Y} = \pm1\)</span>, this means <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are perfectly correlated. Hence that a linear relation perfectly describes each variable. And so, this means there there exist constants <span class="math notranslate nohighlight">\(a, b\)</span> imposing a linear relation between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(X\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[Y = aX + b.
+\]</div>
+<p>With <span class="math notranslate nohighlight">\(a, b\)</span> determined, see that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+Z_{\lambda, \delta}
+&amp;= 
+\lambda X + \delta Y
+\\
+&amp;= 
+(\lambda + a\delta)X + b\delta 
+\\
+&amp;\sim \mathcal N\left((\lambda + a\delta )\mu_X + b\delta, (\lambda + \delta a)^2\sigma_X^2\right)
+\\
+&amp;= \mathcal N\left(\gamma\mu_X + b\delta, \gamma^2\sigma_X^2\right)
+\end{align}
+\end{split}\]</div>
+<p>where we set <span class="math notranslate nohighlight">\(\gamma = \lambda + a\delta\)</span> and used that <span class="math notranslate nohighlight">\(\mathrm{Var}(X) = \mathrm{Var}(X + \mathrm{constant})\)</span>.</p>
+<p>The general solution now to maximizing the expectation <span class="math notranslate nohighlight">\(\mathbb EZ_{\lambda, \delta}\)</span> subject to a fixed risk <span class="math notranslate nohighlight">\(r^2\)</span> is exactly the same as in the special case above. We want <span class="math notranslate nohighlight">\(\gamma^*\)</span> such that <span class="math notranslate nohighlight">\((\gamma^*)^2\sigma_X^2 = r^2\)</span>. Hence,</p>
+<div class="math notranslate nohighlight">
+\[\gamma^* = \frac{r}{\sigma_X}.
+\]</div>
+</div>
+<div class="section" id="determining-the-linear-parameters">
+<h4>Determining the linear parameters<a class="headerlink" href="#determining-the-linear-parameters" title="Permalink to this headline">¶</a></h4>
+<p>If we know the respective means and variances <span class="math notranslate nohighlight">\(\mu_X, \sigma_X, \mu_Y, \sigma_Y\)</span> and if we know <span class="math notranslate nohighlight">\(Y = aX + b\)</span>, the linear parameters <span class="math notranslate nohighlight">\(a, b\)</span> can be determined as follows. Using linearity of the mean we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mu_Y
+&amp;= \mathbb EY
+\\
+&amp;= \mathbb E(a X + b)
+\\
+&amp;= a\mathbb EX + \mathbb Eb
+\\
+&amp;= a\mu_X + b.
+\end{align}
+\end{split}\]</div>
+<p>And using that the variance is translation invariant,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\sigma^2_Y 
+= 
+\sigma^2_{aX + b}
+= 
+a^2 \sigma_X^2.
+\end{align}
+\]</div>
+<p>Hence,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+a
+=
+\pm
+\frac{\sigma_Y}{\sigma_X}
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+b
+=
+\frac{\sigma_X\mu_Y \mp \sigma_Y\mu_X}{\sigma_X}.
+\end{align}
+\]</div>
+<p>The sign <span class="math notranslate nohighlight">\(\pm\)</span> above is determined by the covariance. If <span class="math notranslate nohighlight">\(c_{X, Y} = +\sigma_X\sigma_Y\)</span>, then <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are <em>positively correlated</em> so <span class="math notranslate nohighlight">\(a&gt; 0\)</span>; otherwise if <span class="math notranslate nohighlight">\(c_{X, Y} = -\sigma_X\sigma_Y\)</span>, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are <em>negatively</em> correlated in which case the slope is negative, i.e, <span class="math notranslate nohighlight">\(a&lt; 0\)</span>. As standard deviations are always positive, the fraction <span class="math notranslate nohighlight">\(\sigma_Y/\sigma_X\)</span> will always be positive. Hence,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+a
+=
+\left\{
+\begin{array}{rc}
+\frac{\sigma_Y}{\sigma_X} &amp; \mbox{if $c_{X, Y} = \sigma_X\sigma_Y$};
+\\
+-\frac{\sigma_Y}{\sigma_X} &amp; \mbox{if $c_{X, Y} = -\sigma_X\sigma_Y$}
+\end{array}
+\right.
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+b
+=
+\left\{
+\begin{array}{rc}
+\frac{\sigma_X\mu_Y - \sigma_Y\mu_X}{\sigma_X} &amp; \mbox{if $c_{X, Y} = \sigma_X\sigma_Y$};
+\\
+\frac{\sigma_X\mu_Y + \sigma_Y\mu_X}{\sigma_X} &amp; \mbox{if $c_{X, Y} = -\sigma_X\sigma_Y$.}
+\end{array}
+\right.
+\end{align}
+\end{split}\]</div>
+</div>
+</div>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p>We consider an application of these optimizations to portfolio theory. In this context, how might one interpret <span class="math notranslate nohighlight">\(X, Y\)</span> and <span class="math notranslate nohighlight">\(Z_{\lambda, \delta}\)</span>? Generally, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> might refer to particular stocks or funds while <span class="math notranslate nohighlight">\(Z\)</span> a combination, or, <em>portfolio</em>.</p>
+<p>There are two obvious metrics to which <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> could refer to: <em>stock prices</em> and <em>growth rates</em>. The relation between the two are the following. For a time <span class="math notranslate nohighlight">\(T\)</span>, if <span class="math notranslate nohighlight">\(p_0^X\)</span> and <span class="math notranslate nohighlight">\(p_1^X\)</span> refer to the price in <span class="math notranslate nohighlight">\(X\)</span> at the start and end of <span class="math notranslate nohighlight">\(T\)</span> respectively, then the growth rate <span class="math notranslate nohighlight">\(r_X\)</span> over <span class="math notranslate nohighlight">\(T\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[p_1^X = p_0^Xe^{r_XT}.
+\]</div>
+<p>That is, <span class="math notranslate nohighlight">\(r_X = \frac{1}{T} \ln(p_1^X/p_0^X)\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Assuming growth rates, rather than prices, are normally distributed is another way to say <em>prices are log-normal</em>.</p>
+</div>
+<p>Should the statistics we observe refer to the variation in prices or the variation in growth rates? We address the issue with prices in the following.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Suppose <span class="math notranslate nohighlight">\(X\)</span> is a stock and <span class="math notranslate nohighlight">\(p^X\)</span> the random variable representing the price of <span class="math notranslate nohighlight">\(X\)</span>. Based on a sampling of prices over a time period, let <span class="math notranslate nohighlight">\(\mu_X\)</span> be the average and <span class="math notranslate nohighlight">\(\sigma_X^2\)</span> the variance in prices. The issue now is that the distribution <span class="math notranslate nohighlight">\(\mathcal N(\mu_X, \sigma_X^2)\)</span> does <em>not</em> represent growth in the unit price of <span class="math notranslate nohighlight">\(X\)</span>. Rather, it assumes the price of <span class="math notranslate nohighlight">\(X\)</span> will hover around the average <span class="math notranslate nohighlight">\(\mu_X\)</span> with volatility <span class="math notranslate nohighlight">\(\sigma^2_X\)</span>. This will be the case if one expects <em>zero</em> growth in the price of <span class="math notranslate nohighlight">\(X\)</span>. If there is evidence of growth in the price of <span class="math notranslate nohighlight">\(X\)</span> however, the distribution <span class="math notranslate nohighlight">\(\mathcal N(\mu_X, \sigma_X^2)\)</span> is doomed to grossly mispredict future values of <span class="math notranslate nohighlight">\(p_X\)</span>.</p>
+</div>
+<div class="section" id="growth-rates">
+<h3>Growth rates<a class="headerlink" href="#growth-rates" title="Permalink to this headline">¶</a></h3>
+<p>Continuing on from the above warning, a probability distribution is more appropriate for modelling <em>rates of growth</em>. This is because a constant, non-zero rate of growth will, depending on its sign, represent changes in the price more consistent with a growing or declining value. If the <em>average</em> growth rate is positive, it will indicate an upward trend in the price, ideally reflecting overall growth in value.</p>
+<p>Rates of growth can be sampled from historical data by segmenting a time <em>range</em> <span class="math notranslate nohighlight">\(T_{range}\)</span> into time periods of length <span class="math notranslate nohighlight">\(T\)</span> and calculating the daily growth of the asset or stock over each such period.</p>
+<p>For stocks <span class="math notranslate nohighlight">\(X, Y\)</span> let <span class="math notranslate nohighlight">\(r_X, r_Y\)</span> be the random variables representing the respective growth rates in <span class="math notranslate nohighlight">\(X,Y\)</span> over time periods of length <span class="math notranslate nohighlight">\(T\)</span>. Then <span class="math notranslate nohighlight">\(\mu_X, \mu_Y\)</span> are the <em>average</em> rates of growth over the whole time range <span class="math notranslate nohighlight">\(T_{range}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These averages <span class="math notranslate nohighlight">\(\mu_X, \mu_Y\)</span> reflect the expected level of growth in <span class="math notranslate nohighlight">\(X, Y\)</span> over a given day. To annualize these rates we need to simply multiply by the number of days in a year. Similarly, the standard deviation represents expected volatility in daily growth. To annualize it, it is again a matter of multiplying by the number of days in a year.</p>
+</div>
+<p>Over the time range a portfolio <span class="math notranslate nohighlight">\(Z = \lambda X + \delta Y\)</span> grows at an averate rate <span class="math notranslate nohighlight">\(\mu_Z = \lambda \mu_X + \delta \mu_Y\)</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Here <span class="math notranslate nohighlight">\(r_{Z} = \lambda r_X + \delta r_Y\)</span> does <em>not</em> mean we are holding <span class="math notranslate nohighlight">\(\lambda\)</span> units of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(\delta\)</span> units of <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+</div>
+<p>Let <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> be optimal parameters. Then <span class="math notranslate nohighlight">\(\mu_{Z^*}\)</span> represents the <em>maximum</em> expected growth subject to a fixed risk tolerance, being the variance in growth rates <span class="math notranslate nohighlight">\(\sigma^2_{Z}\)</span> for the portfolio <span class="math notranslate nohighlight">\(Z\)</span>.</p>
+<p>Now suppose we know <span class="math notranslate nohighlight">\(\mu_{Z^*}\)</span> by having found the optimal parameters <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span>. Suppose moreover that we have an amount <span class="math notranslate nohighlight">\(N\)</span> to invest. <em>How much of <span class="math notranslate nohighlight">\(N\)</span> should we invest into holding <span class="math notranslate nohighlight">\(X\)</span> and how much into holding <span class="math notranslate nohighlight">\(Y\)</span>?</em></p>
+</div>
+<div class="section" id="optimal-unit-holdings">
+<h3>Optimal unit holdings<a class="headerlink" href="#optimal-unit-holdings" title="Permalink to this headline">¶</a></h3>
+<p>To answer this question, recall from earlier that unit prices are related to growth rates over a time period of length <span class="math notranslate nohighlight">\(T\)</span> by,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+p_1^X = p_0^Xe^{r_XT};
+&amp;&amp;
+p_1^Y = p_0^Ye^{r_YT}
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+p_1^Z = p_0^Ze^{r_ZT}.
+\end{align}
+\]</div>
+<p>Now let <span class="math notranslate nohighlight">\(N\)</span> be our total investment amount. Write <span class="math notranslate nohighlight">\(N = N_X + N_Y\)</span> where <span class="math notranslate nohighlight">\(N_X\)</span> represents the amount invested in <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(N_Y\)</span> the amount invested in <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Above, the prices <span class="math notranslate nohighlight">\(p_i^X, p_i^Y, p_i^Z\)</span> are over a time period. We invest at the start of the time <em>range</em> <span class="math notranslate nohighlight">\(T_{range}\)</span> however, so these prices are now at the start and end of the time range. That is, <span class="math notranslate nohighlight">\(p_0^X, p_1^X\)</span>; <span class="math notranslate nohighlight">\(p_0^Y, p_1^Y\)</span> and <span class="math notranslate nohighlight">\(p_0^Z, p_1^Z\)</span> now denote the starting and ending prices respectively of <span class="math notranslate nohighlight">\(X, Y\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> over the time range <span class="math notranslate nohighlight">\(T_{range}\)</span>. The respective unit holdings are,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda_X = \frac{N_X}{p_0^X}
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+\delta_Y = \frac{N_Y}{p_0^Y}
+\end{align}
+\]</div>
+<p>Our objective is to find a formula relating <span class="math notranslate nohighlight">\(\lambda_X, \delta_Y\)</span> with the optimal parameters <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> in the average growth rate <span class="math notranslate nohighlight">\(\mu_{Z^*}\)</span>. With <span class="math notranslate nohighlight">\(\lambda_X,\delta_Y\)</span> as above, note that <span class="math notranslate nohighlight">\(p_0^{Z}, p_1^Z\)</span> will be related to the prices <span class="math notranslate nohighlight">\(p_0^X, p_1^X\)</span> and <span class="math notranslate nohighlight">\(p_0^Y, p_1^Y\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+p_0^Z = \lambda_X p_0^X + \delta_Yp_0^Y
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+p_1^Z = \lambda_X p_1^X + \delta_Yp_1^Y.
+\end{align}
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\ell\)</span> denote the length of the time range <span class="math notranslate nohighlight">\(T_{range}\)</span>. With <span class="math notranslate nohighlight">\(\mu_{Z} = \lambda \mu_X + \delta \mu_Y\)</span>, see that</p>
+<div class="math notranslate nohighlight">
+\[p_1^Z = p_0^Ze^{\mu_Z\ell} = p_0^Ze^{\lambda \mu_X\ell + \delta \mu_Y\ell}.\]</div>
+<p>From the above expressions for <span class="math notranslate nohighlight">\(p_0^Z, p_1^Z\)</span> we find</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\lambda_X p_0^Xe^{\mu_X\ell} + \delta_Yp_0^Ye^{\mu_Y\ell}
+&amp;=
+p_1^Z 
+\\
+&amp;= p_0^Z e^{\mu_Z\ell}
+\\
+&amp;= \left(\lambda_X p_0^X + \delta_Yp_0^Y\right)e^{\lambda \mu_X\ell + \delta \mu_Y\ell}
+\end{align}
+\end{split}\]</div>
+<p>Hence,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda_X
+=
+\delta_Y
+\frac{p_0^Y}{p_X^0}
+\frac{e^{\lambda \mu_X\ell + \delta \mu_Y\ell} - e^{\mu_Y\ell}}{e^{\mu_X\ell} - e^{\lambda\mu_X\ell + \delta\mu_Y\ell}}
+\end{align}
+\]</div>
+<p>Now recall that we have a specified investment amount <span class="math notranslate nohighlight">\(N\)</span>. Using this gives,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+N 
+&amp;= 
+N_X + N_Y
+\\
+&amp;=
+p_0^X\lambda_X + p_0^Y\delta_Y
+\\
+\Longrightarrow
+\delta_Y
+&amp;= 
+N\frac{1}{p_0^Y} - \lambda_X\frac{p_0^X}{p_0^Y}
+\\
+&amp;= 
+N\frac{1}{p_0^Y} - \delta_Y \left(\frac{e^{\lambda \mu_X\ell + \delta \mu_Y\ell} - e^{\mu_Y\ell}}{e^{\mu_X\ell} - e^{\lambda\mu_X\ell + \delta\mu_Y\ell}}\right) 
+\end{align}
+\end{split}\]</div>
+<p>Rearranging for <span class="math notranslate nohighlight">\(\delta_Y\)</span> now gives an expression for <span class="math notranslate nohighlight">\(\delta_Y\)</span> in terms of known parameters. Substituting this into <span class="math notranslate nohighlight">\(\lambda_X\)</span> then gives <span class="math notranslate nohighlight">\(\lambda_X\)</span> in terms of known parameters. In known parameters then we find,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\lambda_X
+=
+\frac{N}{p^X_0}
+\frac{e^{\lambda \mu_X\ell + \delta \mu_Y\ell} - e^{\mu_Y\ell}}{e^{\mu_X\ell} - e^{\mu_Y\ell}}
+&amp;&amp;
+\mbox{and}
+&amp;&amp;
+\delta_Y
+=
+\frac{N}{p_0^Y}
+\frac{e^{\mu_X\ell} - e^{\lambda \mu_X\ell + \delta \mu_Y\ell}}{e^{\mu_X\ell} - e^{\mu_Y\ell}}
+\end{align}
+\]</div>
+<p>As a consistency check, see that <span class="math notranslate nohighlight">\(p_0^X\lambda_X + p_0^Y\delta_Y = N\)</span>. Note moreover that it is relatively symmetric, as we might expect since <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> enter symmetrically (i.e., one is not preferable to the other).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By relatively symmetric it is meant <em>symmetric</em> if <span class="math notranslate nohighlight">\(\lambda = \delta\)</span>. So in the case <span class="math notranslate nohighlight">\(\lambda = \delta\)</span>, interchanging <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> has no effect on the resepctive holdings.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The formulae for the holdings <span class="math notranslate nohighlight">\(\lambda_X, \lambda_Y\)</span> are not defined in the case <span class="math notranslate nohighlight">\(\mu_X = \mu_Y\)</span>.</p>
+</div>
+<p>We can conclude now that for optimal parameters <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> defining the maximum growth rate <span class="math notranslate nohighlight">\(\mu_{Z^*}\)</span> subject to a fixed volatility: for a given investment amount <span class="math notranslate nohighlight">\(N\)</span>, we should hold <span class="math notranslate nohighlight">\(\lambda_X^*\)</span> units of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(\delta_Y^*\)</span> units of <span class="math notranslate nohighlight">\(Y\)</span> where <span class="math notranslate nohighlight">\(\lambda_X^*, \delta_Y^*\)</span> are given by the above formulas for <span class="math notranslate nohighlight">\(\lambda_X, \delta_Y\)</span> with <span class="math notranslate nohighlight">\(\lambda = \lambda^*\)</span> and <span class="math notranslate nohighlight">\(\delta = \delta^*\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since unit holdings are integers, we ought to hold the respective <em>floors</em> of <span class="math notranslate nohighlight">\(\lambda_X^*, \delta_Y^*\)</span>. Moreover, these holdings could be negative which signifies taking a short position in the stock in question.</p>
+</div>
+<p>The optimal amount to invest in <span class="math notranslate nohighlight">\(X\)</span> is then <span class="math notranslate nohighlight">\(p_0^X\lambda_X^*\)</span> and in <span class="math notranslate nohighlight">\(Y\)</span> it is <span class="math notranslate nohighlight">\(p_0^Y\delta^*_Y\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The answer we have obtained above does not generalize to find optimal holdings among three or more stocks. It was essential to use the relation <span class="math notranslate nohighlight">\(N_X = N - N_Y\)</span> to eliminate one degree of freedom and thereby return a unique solution. If there are three or more stocks, this relation will still eliminate one degree of freedom, but there will be more degrees of freedom overall. As such, this relation alone will not be sufficient to yield a unique solution.</p>
+</div>
+</div>
+<div class="section" id="remarks-on-the-perfectly-correlated-case">
+<h3>Remarks on the perfectly correlated case<a class="headerlink" href="#remarks-on-the-perfectly-correlated-case" title="Permalink to this headline">¶</a></h3>
+<p>With the shift in focus from prices to growth rates, recall that the portfolio <span class="math notranslate nohighlight">\(Z_{\lambda, \delta} = \lambda X + \delta Y\)</span> represents the fund which grows at the rate <span class="math notranslate nohighlight">\(\lambda r_X + \delta r_Y\)</span> over a given day. Accordingly, it grows at an <em>average</em> daily rate <span class="math notranslate nohighlight">\(\mu_Z = \lambda\mu_X + \delta \mu_Y\)</span>. If the growth rates <span class="math notranslate nohighlight">\(r_X, r_Y\)</span> are perfectly correlated, then holding <span class="math notranslate nohighlight">\(Y\)</span> represents either adding to one’s holding position in <span class="math notranslate nohighlight">\(X\)</span> or shorting <span class="math notranslate nohighlight">\(X\)</span>. Either way, the growth rate is unaffected. After all, the growth rate in one unit of <span class="math notranslate nohighlight">\(X\)</span> is the same as the growth rate of one million units of <span class="math notranslate nohighlight">\(X\)</span>. The expected <em>return</em> of course differing by a factor of a million. But this is ultimately constrained by our initial investment amount <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p>If our random variables represent growth rates, it does not make sense to consider the case of perfectly correlated stocks. Indeed, in order to acheive a higher or lower rate of growth it is necessary to combine independent or imperfectly correlated stocks.</p>
+<p>Another way to see this is by heeding the above warning. From the above formulae for unit holdings <span class="math notranslate nohighlight">\(\lambda_X, \delta_Y\)</span>:</p>
+<ul class="simple">
+<li><p>if <span class="math notranslate nohighlight">\(\mu_X = \mu_Y\)</span>, then <span class="math notranslate nohighlight">\(\lambda_X, \delta_Y\)</span> are both undefined;</p></li>
+<li><p>if <span class="math notranslate nohighlight">\(\mu_X = (1-\delta)\mu_Y\)</span>, then concerning the <span class="math notranslate nohighlight">\(X\)</span> holdings, <span class="math notranslate nohighlight">\(\lambda_X = 0\)</span>;</p></li>
+<li><p>if <span class="math notranslate nohighlight">\(\mu_Y = (1-\lambda)\mu_X\)</span>, then concerning the <span class="math notranslate nohighlight">\(Y\)</span> holdings, <span class="math notranslate nohighlight">\(\delta_Y = 0\)</span>.</p></li>
+</ul>
+<p>Now recall that if <span class="math notranslate nohighlight">\(X, Y\)</span> are perfectly correlated, then they lie in a linear relationship, i.e., are linearly <em>dependent</em>. In the case they are “canonically dependent”, <span class="math notranslate nohighlight">\(X = Y\)</span>, by the first dot point we see it will not make sense to study stochasticity in the daily growth rates of <span class="math notranslate nohighlight">\(X, Y\)</span>.</p>
+<p>More generally, recall that if <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are linearly dependent, the equation for determining the optimal parameters <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span> is undetermined. We can solve uniquely for a linear combination <span class="math notranslate nohighlight">\(\gamma^*\)</span> of <span class="math notranslate nohighlight">\(\lambda, \delta^*\)</span>, but there will always be a degree of freedom in choosing <span class="math notranslate nohighlight">\(\lambda^*, \delta^*\)</span>. By the second and third dot point above, this degree of freedom can be exploited to set either <span class="math notranslate nohighlight">\(\lambda_X\)</span> or <span class="math notranslate nohighlight">\(\delta_Y\)</span> to zero. This accords with the common sense understanding above that if <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are perfectly correlated, holding both means to either add to our holding or short position in one. This can only affect the sign of the growth rate but not its magnitude (e.g., <span class="math notranslate nohighlight">\(-X\)</span> grows at an expected rate of <span class="math notranslate nohighlight">\(-\mu_X\)</span>).</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By The Jupyter Book community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
